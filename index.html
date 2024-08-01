@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swipe Gambar 3D dengan Transparansi</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: transparent; /* Transparansi untuk latar belakang */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: relative;
+            width: 80vw;
+            height: 60vh;
+            perspective: 1000px; /* Memberikan efek perspektif 3D */
+        }
+        .wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+            transform: rotateY(0deg);
+        }
+        .image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            backface-visibility: hidden; /* Menghindari tampilan belakang */
+        }
+        .image:nth-child(1) {
+            background-image: url('your-image1.png'); /* Ganti dengan URL gambar transparan */
+            transform: rotateY(0deg); /* Memutar gambar di sumbu Y */
+        }
+        .image:nth-child(2) {
+            background-image: url('your-image2.png'); /* Ganti dengan URL gambar transparan */
+            transform: rotateY(90deg); /* Memutar gambar di sumbu Y */
+        }
+        .image:nth-child(3) {
+            background-image: url('your-image3.png'); /* Ganti dengan URL gambar transparan */
+            transform: rotateY(180deg); /* Memutar gambar di sumbu Y */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <div class="image"></div>
+            <div class="image"></div>
+            <div class="image"></div>
+        </div>
+    </div>
+
+    <script>
+        const wrapper = document.querySelector('.wrapper');
+        let startX;
+
+        document.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            document.addEventListener('mousemove', onMouseMove);
+        });
+
+        document.addEventListener('mouseup', () => {
+            document.removeEventListener('mousemove', onMouseMove);
+        });
+
+        function onMouseMove(e) {
+            const deltaX = e.clientX - startX;
+            const rotationY = deltaX / window.innerWidth * 360;
+            wrapper.style.transform = `rotateY(${rotationY}deg)`;
+        }
+    </script>
+</body>
+</html>
